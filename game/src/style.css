@@ -1,0 +1,393 @@
+/* style.css — Port Azura: Sunset Heat. HUD, minimap frame, banners and the
+   menu screens, in a sunset palette of coral, gold and deep teal. */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #1a1210;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  color: #f5ead9;
+}
+
+#app,
+#app canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ---------------- HUD ---------------- */
+
+#hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+#hud-top-left {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  max-width: 430px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+}
+
+#hud-objective {
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffd9a0;
+  line-height: 1.25;
+}
+
+#hud-objective-sub {
+  font-size: 13.5px;
+  color: #f5ead9;
+  opacity: 0.92;
+  margin-top: 3px;
+}
+
+#hud-top-right {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  text-align: right;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+}
+
+#hud-cash {
+  font-size: 30px;
+  font-weight: 800;
+  color: #8fe388;
+  letter-spacing: 0.5px;
+}
+
+#hud-wanted-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #ff9a8a;
+  visibility: hidden;
+  margin-top: 2px;
+}
+
+#hud-stars {
+  font-size: 24px;
+  color: #5a5148;
+  letter-spacing: 3px;
+  line-height: 1.1;
+}
+
+#hud-stars.hot {
+  color: #ffc93c;
+  text-shadow: 0 0 12px rgba(255, 160, 40, 0.8);
+}
+
+.bar-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  opacity: 0.85;
+  margin-top: 7px;
+}
+
+.bar {
+  width: 190px;
+  height: 11px;
+  margin-left: auto;
+  background: rgba(10, 10, 12, 0.62);
+  border: 1px solid rgba(245, 234, 217, 0.5);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+#hud-health-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #53b06a, #8fe388);
+  transition: width 0.15s linear;
+}
+
+#hud-health-fill.low {
+  background: linear-gradient(90deg, #c03a30, #e2543e);
+}
+
+#hud-carhealth {
+  display: none;
+}
+
+#hud-carhealth-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #3a7bd5, #7ab5ff);
+  transition: width 0.15s linear;
+}
+
+#minimap {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  width: 184px;
+  height: 184px;
+  border: 2px solid rgba(245, 234, 217, 0.65);
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+  background: #2e3238;
+}
+
+#hud-speed {
+  position: absolute;
+  right: 24px;
+  bottom: 22px;
+  font-size: 30px;
+  font-weight: 800;
+  color: #ffd9a0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: none;
+}
+
+#hud-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 15%;
+  transform: translateX(-50%);
+  font-size: 17px;
+  font-weight: 600;
+  background: rgba(12, 10, 10, 0.72);
+  border: 1px solid rgba(255, 217, 160, 0.55);
+  border-radius: 6px;
+  padding: 8px 16px;
+  display: none;
+  white-space: nowrap;
+}
+
+#bust-wrap {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-50%);
+  display: none;
+  text-align: center;
+}
+
+#bust-label {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #ff6a55;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+  margin-bottom: 5px;
+}
+
+#bust-wrap .bar {
+  width: 240px;
+  margin: 0 auto;
+}
+
+#bust-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #e2543e, #ff3524);
+}
+
+#hud-keys {
+  position: absolute;
+  right: 24px;
+  bottom: 64px;
+  font-size: 11.5px;
+  opacity: 0.66;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+/* ---------------- Banner & flash ---------------- */
+
+#banner {
+  position: fixed;
+  top: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 6;
+  pointer-events: none;
+  display: none;
+  max-width: 640px;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.85);
+}
+
+#banner-title {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+  color: #ffc93c;
+}
+
+#banner-sub {
+  font-size: 15.5px;
+  margin-top: 6px;
+  line-height: 1.45;
+  color: #f5ead9;
+}
+
+#damage-flash {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 42%, rgba(200, 30, 20, 0.55) 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-out;
+  z-index: 4;
+}
+
+/* ---------------- Screens ---------------- */
+
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(24, 12, 16, 0.42), rgba(24, 12, 16, 0.68));
+}
+
+.screen .panel {
+  max-width: 620px;
+  width: calc(100% - 48px);
+  background: rgba(16, 14, 18, 0.86);
+  border: 1px solid rgba(255, 201, 60, 0.45);
+  border-radius: 12px;
+  padding: 30px 36px 26px;
+  text-align: center;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+}
+
+.screen .panel.small {
+  max-width: 430px;
+}
+
+.kicker {
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: #ff9a6a;
+  font-weight: 700;
+}
+
+.screen h1 {
+  font-size: 58px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  line-height: 1.02;
+  margin-top: 8px;
+  background: linear-gradient(180deg, #ffe9b0 15%, #ff9a5c 60%, #e2543e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tagline {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 9px;
+  color: #7ad0e0;
+  margin-top: 4px;
+}
+
+.screen h2 {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #ffd9a0;
+}
+
+.screen h2.end-title {
+  color: #ffc93c;
+  margin-top: 8px;
+}
+
+.story {
+  font-size: 14.5px;
+  line-height: 1.55;
+  margin-top: 16px;
+  color: #efe3cd;
+}
+
+.story b {
+  color: #ffd9a0;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  justify-content: center;
+  margin-top: 18px;
+  font-size: 12.5px;
+  opacity: 0.92;
+}
+
+.controls b {
+  color: #7ad0e0;
+}
+
+.buttons {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.buttons button {
+  font: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #201409;
+  background: linear-gradient(180deg, #ffd970, #ffab3c);
+  border: none;
+  border-radius: 7px;
+  padding: 12px 26px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(255, 150, 50, 0.35);
+}
+
+.buttons button:hover {
+  filter: brightness(1.1);
+}
+
+.buttons button:disabled {
+  filter: grayscale(0.8);
+  opacity: 0.45;
+  cursor: default;
+  box-shadow: none;
+}
+
+.fineprint {
+  margin-top: 16px;
+  font-size: 11.5px;
+  opacity: 0.6;
+}
+
+#debug-errors {
+  position: fixed;
+  left: 8px;
+  bottom: 4px;
+  z-index: 50;
+  color: #ff8a75;
+  font-size: 11px;
+  max-width: 60%;
+  pointer-events: none;
+  white-space: pre-wrap;
+}
