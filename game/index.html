@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Port Azura: Sunset Heat — an original open-world crime game</title>
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<div id="app"></div>
+
+<!-- ======================= HUD ======================= -->
+<div id="hud" class="hidden">
+  <div id="hud-top-left">
+    <div id="hud-objective"></div>
+    <div id="hud-objective-sub"></div>
+  </div>
+  <div id="hud-top-right">
+    <div id="hud-cash">$0</div>
+    <div id="hud-wanted-label">WANTED</div>
+    <div id="hud-stars">☆☆☆☆☆</div>
+    <div class="bar-label">HEALTH</div>
+    <div class="bar"><div id="hud-health-fill"></div></div>
+    <div id="hud-carhealth">
+      <div class="bar-label">CAR</div>
+      <div class="bar"><div id="hud-carhealth-fill"></div></div>
+    </div>
+  </div>
+  <canvas id="minimap" width="184" height="184"></canvas>
+  <div id="hud-speed">0 km/h</div>
+  <div id="hud-prompt"></div>
+  <div id="bust-wrap"><div id="bust-label">BUSTED</div><div class="bar"><div id="bust-fill"></div></div></div>
+  <div id="hud-keys">WASD move · E enter/exit car · F punch · Shift sprint · Space handbrake · P pause · M mute</div>
+</div>
+<div id="banner" class="hidden">
+  <div id="banner-title"></div>
+  <div id="banner-sub"></div>
+</div>
+<div id="damage-flash"></div>
+
+<!-- ======================= START ======================= -->
+<div id="screen-start" class="screen">
+  <div class="panel">
+    <div class="kicker">AN ORIGINAL OPEN-WORLD CRIME GAME</div>
+    <h1>PORT AZURA</h1>
+    <div class="tagline">SUNSET HEAT</div>
+    <p class="story">
+      Port Azura, the last golden hour. You are <b>Rook</b>, a getaway driver with a
+      borrowed name and a clean record — for now. Fixer <b>Marisol Vega</b> runs the
+      Marina Garage and has work for a driver who doesn't ask questions: a stranded
+      brother, a street-racing circuit, a van full of somebody else's merchandise,
+      and one big score at the marina office. Build your name, mind the stars,
+      and don't stop for the Port Azura PD.
+    </p>
+    <div class="controls">
+      <span><b>WASD / Arrows</b> move &amp; drive</span>
+      <span><b>Mouse</b> camera (click the game to lock)</span>
+      <span><b>E</b> enter / exit car</span>
+      <span><b>F</b> punch</span>
+      <span><b>Shift</b> sprint</span>
+      <span><b>Space</b> handbrake</span>
+      <span><b>P</b> pause</span>
+      <span><b>M</b> mute</span>
+    </div>
+    <div class="buttons">
+      <button id="btn-start">NEW GAME</button>
+      <button id="btn-continue">CONTINUE</button>
+    </div>
+    <div class="fineprint">Progress, cash and story state save automatically in your browser.</div>
+  </div>
+</div>
+
+<!-- ======================= PAUSE ======================= -->
+<div id="screen-pause" class="screen hidden">
+  <div class="panel small">
+    <h2>PAUSED</h2>
+    <p class="story">The heat waits for no one — except now.</p>
+    <div class="buttons">
+      <button id="btn-resume">RESUME</button>
+      <button id="btn-restart">RESTART STORY</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= WASTED / BUSTED ======================= -->
+<div id="screen-wasted" class="screen hidden">
+  <div class="panel small">
+    <h2 id="wasted-title">WASTED</h2>
+    <p class="story" id="wasted-sub"></p>
+    <div class="buttons">
+      <button id="btn-respawn">GET BACK UP</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= STORY COMPLETE ======================= -->
+<div id="screen-end" class="screen hidden">
+  <div class="panel">
+    <div class="kicker">THE MARINA SCORE IS YOURS</div>
+    <h2 class="end-title">STORY COMPLETE</h2>
+    <p class="story" id="end-sub">
+      Rook's name is made in Port Azura. The city is yours now: free-roam the
+      avenues, beat your circuit time in the $200 rematch at the Marina Garage,
+      and try not to collect all five stars at once.
+    </p>
+    <div class="buttons">
+      <button id="btn-freeroam">FREE ROAM</button>
+    </div>
+  </div>
+</div>
+
+<div id="debug-errors"></div>
+
+<script src="vendor/three.min.js"></script>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
