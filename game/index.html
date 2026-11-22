@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Port Azura: Sunset Heat — an original open-world crime game</title>
+<title>Port Azura: Sunset Heat</title>
 <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
@@ -12,106 +12,124 @@
 <!-- ======================= HUD ======================= -->
 <div id="hud" class="hidden">
   <div id="hud-top-left">
-    <div id="hud-objective"></div>
-    <div id="hud-objective-sub"></div>
+    <div id="cash">$350</div>
+    <div id="mission-tag">FREE ROAM</div>
   </div>
+
   <div id="hud-top-right">
-    <div id="hud-cash">$0</div>
-    <div id="hud-wanted-label">WANTED</div>
-    <div id="hud-stars">☆☆☆☆☆</div>
+    <canvas id="minimap" width="190" height="190"></canvas>
+    <div id="stars" aria-label="wanted level"></div>
+  </div>
+
+  <div id="objective" class="hidden">
+    <div id="objective-title"></div>
+    <div id="objective-sub"></div>
+  </div>
+
+  <div id="banner" class="hidden"><div id="banner-title"></div><div id="banner-sub"></div></div>
+
+  <div id="hud-bottom-left">
     <div class="bar-label">HEALTH</div>
-    <div class="bar"><div id="hud-health-fill"></div></div>
-    <div id="hud-carhealth">
-      <div class="bar-label">CAR</div>
-      <div class="bar"><div id="hud-carhealth-fill"></div></div>
+    <div class="bar"><div id="health-fill"></div></div>
+    <div id="car-health" class="hidden">
+      <div class="bar-label">VEHICLE</div>
+      <div class="bar"><div id="car-health-fill"></div></div>
     </div>
   </div>
-  <canvas id="minimap" width="184" height="184"></canvas>
-  <div id="hud-speed">0 km/h</div>
-  <div id="hud-prompt"></div>
-  <div id="bust-wrap"><div id="bust-label">BUSTED</div><div class="bar"><div id="bust-fill"></div></div></div>
-  <div id="hud-keys">WASD move · E enter/exit car · F punch · Shift sprint · Space handbrake · P pause · M mute</div>
-</div>
-<div id="banner" class="hidden">
-  <div id="banner-title"></div>
-  <div id="banner-sub"></div>
-</div>
-<div id="damage-flash"></div>
 
-<!-- ======================= START ======================= -->
+  <div id="hud-bottom-right">
+    <div id="speed" class="hidden"><span id="speed-num">0</span><span id="speed-unit">MPH</span></div>
+  </div>
+
+  <div id="prompt" class="hidden"></div>
+
+  <div id="bust" class="hidden">
+    <div id="bust-label">BUSTED IN…</div>
+    <div class="bar bust-bar"><div id="bust-fill"></div></div>
+  </div>
+
+  <div id="toast" class="hidden"></div>
+</div>
+
+<!-- ======================= SCREENS ======================= -->
 <div id="screen-start" class="screen">
-  <div class="panel">
-    <div class="kicker">AN ORIGINAL OPEN-WORLD CRIME GAME</div>
-    <h1>PORT AZURA</h1>
-    <div class="tagline">SUNSET HEAT</div>
+  <div class="screen-inner">
+    <div class="game-logo">PORT AZURA</div>
+    <div class="game-subtitle">— SUNSET HEAT —</div>
     <p class="story">
-      Port Azura, the last golden hour. You are <b>Rook</b>, a getaway driver with a
-      borrowed name and a clean record — for now. Fixer <b>Marisol Vega</b> runs the
-      Marina Garage and has work for a driver who doesn't ask questions: a stranded
-      brother, a street-racing circuit, a van full of somebody else's merchandise,
-      and one big score at the marina office. Build your name, mind the stars,
-      and don't stop for the Port Azura PD.
+      Port Azura, a sun-drenched coastal city where the marina money is dirty and the
+      sunsets are clean. You are <b>Rook</b>, a getaway driver with a borrowed car and a
+      thin wallet. Fixer <b>Marisol Vega</b> has work: pickups, races, one very hot van,
+      and a last stand at the marina. Take the jobs, dodge the Port Azura PD, and get
+      rich before the light goes down.
     </p>
-    <div class="controls">
-      <span><b>WASD / Arrows</b> move &amp; drive</span>
-      <span><b>Mouse</b> camera (click the game to lock)</span>
-      <span><b>E</b> enter / exit car</span>
-      <span><b>F</b> punch</span>
-      <span><b>Shift</b> sprint</span>
-      <span><b>Space</b> handbrake</span>
-      <span><b>P</b> pause</span>
-      <span><b>M</b> mute</span>
+    <div class="controls-grid">
+      <span><b>W A S D</b> Move / Drive</span>
+      <span><b>Mouse</b> Camera (click to lock)</span>
+      <span><b>Shift</b> Sprint</span>
+      <span><b>E</b> Enter / Exit car</span>
+      <span><b>Space</b> Handbrake</span>
+      <span><b>F / Click</b> Punch</span>
+      <span><b>P</b> Pause</span>
+      <span><b>M</b> Mute</span>
     </div>
-    <div class="buttons">
-      <button id="btn-start">NEW GAME</button>
-      <button id="btn-continue">CONTINUE</button>
+    <div class="screen-buttons">
+      <button id="btn-start" class="btn btn-main">START — NEW GAME</button>
+      <button id="btn-continue" class="btn hidden">CONTINUE</button>
     </div>
-    <div class="fineprint">Progress, cash and story state save automatically in your browser.</div>
+    <div class="screen-foot">An original open-world crime game. Every car, name and street is fictional.</div>
   </div>
 </div>
 
-<!-- ======================= PAUSE ======================= -->
 <div id="screen-pause" class="screen hidden">
-  <div class="panel small">
-    <h2>PAUSED</h2>
-    <p class="story">The heat waits for no one — except now.</p>
-    <div class="buttons">
-      <button id="btn-resume">RESUME</button>
-      <button id="btn-restart">RESTART STORY</button>
+  <div class="screen-inner narrow">
+    <div class="screen-title">PAUSED</div>
+    <p class="story" id="pause-stats"></p>
+    <div class="screen-buttons">
+      <button id="btn-resume" class="btn btn-main">RESUME</button>
+      <button id="btn-restart" class="btn">RESTART STORY</button>
     </div>
   </div>
 </div>
 
-<!-- ======================= WASTED / BUSTED ======================= -->
+<div id="screen-busted" class="screen hidden">
+  <div class="screen-inner narrow">
+    <div class="screen-title busted">BUSTED</div>
+    <p class="story">Port Azura PD boxed you in. Bail and fines cost you <b id="busted-cost">$0</b>.
+    You walk out of the station with your record — and your heat — wiped clean.</p>
+    <div class="screen-buttons"><button id="btn-busted-ok" class="btn btn-main">WALK OUT</button></div>
+  </div>
+</div>
+
 <div id="screen-wasted" class="screen hidden">
-  <div class="panel small">
-    <h2 id="wasted-title">WASTED</h2>
-    <p class="story" id="wasted-sub"></p>
-    <div class="buttons">
-      <button id="btn-respawn">GET BACK UP</button>
-    </div>
+  <div class="screen-inner narrow">
+    <div class="screen-title wasted">WASTED</div>
+    <p class="story">You wake up at the Azura Clinic. The bill comes to <b id="wasted-cost">$0</b>.
+    The city, indifferent, glows on without you.</p>
+    <div class="screen-buttons"><button id="btn-wasted-ok" class="btn btn-main">DISCHARGE ME</button></div>
   </div>
 </div>
 
-<!-- ======================= STORY COMPLETE ======================= -->
-<div id="screen-end" class="screen hidden">
-  <div class="panel">
-    <div class="kicker">THE MARINA SCORE IS YOURS</div>
-    <h2 class="end-title">STORY COMPLETE</h2>
-    <p class="story" id="end-sub">
-      Rook's name is made in Port Azura. The city is yours now: free-roam the
-      avenues, beat your circuit time in the $200 rematch at the Marina Garage,
-      and try not to collect all five stars at once.
-    </p>
-    <div class="buttons">
-      <button id="btn-freeroam">FREE ROAM</button>
-    </div>
+<div id="screen-complete" class="screen hidden">
+  <div class="screen-inner narrow">
+    <div class="screen-title complete">STORY COMPLETE</div>
+    <p class="story">The van is gone, the marina is quiet, and Marisol Vega owes you a favour
+    she will never repay. Port Azura is yours now: free-roam the streets, or run the
+    <b>Sunset Circuit</b> rematch for <b>$200</b> a win, any time.</p>
+    <p class="story" id="complete-stats"></p>
+    <div class="screen-buttons"><button id="btn-complete-ok" class="btn btn-main">KEEP DRIVING</button></div>
   </div>
 </div>
-
-<div id="debug-errors"></div>
 
 <script src="vendor/three.min.js"></script>
-<script type="module" src="src/main.js"></script>
+<script src="src/util.js"></script>
+<script src="src/audio.js"></script>
+<script src="src/world.js"></script>
+<script src="src/vehicles.js"></script>
+<script src="src/people.js"></script>
+<script src="src/police.js"></script>
+<script src="src/missions.js"></script>
+<script src="src/hud.js"></script>
+<script src="src/game.js"></script>
 </body>
 </html>
