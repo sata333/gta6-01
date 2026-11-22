@@ -1,66 +1,90 @@
-[![Competition](https://make.fun/badge/gta6-01.svg)](https://make.fun/bounty/gta6-01)
-[![Prize pool](https://make.fun/badge/gta6-01/prize.svg)](https://make.fun/bounty/gta6-01)
-[![Deadline](https://make.fun/badge/gta6-01/deadline.svg)](https://make.fun/bounty/gta6-01)
-
 # Port Azura: Sunset Heat
 
-An original open-world crime game built for the make.fun bounty
-[Make GTA 6](https://make.fun/bounty/gta6-01). Everything here — the city of
-Port Azura, its people, vehicles, story and art — is original; nothing is taken
-from any commercial game.
+[![Competition](https://make.fun/badge/gta6-01.svg)](https://make.fun/bounty/gta6-01)
+[![Prize](https://make.fun/badge/gta6-01/prize.svg)](https://make.fun/bounty/gta6-01)
+[![Deadline](https://make.fun/badge/gta6-01/deadline.svg)](https://make.fun/bounty/gta6-01)
 
-You are Rook, a getaway driver fresh off the bus with $350 and a borrowed
-phone. Fixer Marisol Vega has work: a pier pickup, a timed run to the Hotel
-Azul, the six-checkpoint Sunset Circuit, a hot van to cool down and deliver,
-and one last score at the marina office before the heat dies down. Earn cash,
-build a name, and try not to meet the Port Azura PD up close.
+An original open-world crime game for make.fun's **gta6-01** bounty, built with
+three.js (vendored) and plain static files — no build step, no network requests.
+Everything is fictional: the city of Port Azura, its people, cars and story were
+created for this entry. Nothing comes from any commercial game.
 
-## What's in the game
+You are **Rook**, a getaway driver in the sunset coastal city of Port Azura.
+Fixer **Marisol Vega** has four jobs for you: a pier pickup against the clock,
+the six-gate Sunset Circuit, a very hot red van, and a last stand at the marina
+office — followed by a 4-star escape to Casa Segura. Between jobs the city is
+yours: steal cars, dodge the Port Azura PD, and build your bankroll from $350.
 
-- A 3D sunset coastal city — 9×7 street grid, marina, beach, park and pier —
-  explorable on foot and by car, with a third-person camera.
-- Live traffic on the grid and pedestrians on the sidewalks; any car can be
-  entered and driven (theft included, witnesses permitting).
-- A wanted system: crimes raise your stars, police interceptors pursue, and
-  staying out of sight cools the heat. Get boxed in and you are busted; get
-  flattened and you wake up at the hospital — both cost cash.
-- A four-mission story chain with beacons, objectives, timers and cash
-  rewards, plus a repeatable checkpoint circuit in free roam.
-- Punch combat, car damage and wrecks, player health and regeneration.
-- HUD with cash, wanted stars, health and car condition, the current objective
-  and a live minimap (traffic, police, mission marker).
-- Start, pause, busted/wasted and story-complete screens; progress saves to
-  localStorage and can be continued.
-- Fully procedural sound (WebAudio): engine, sirens, ambience and effects.
-  No audio files, no network requests, no build step.
+## Features
+
+- **A living city**: a 9×7 street grid with ~94 instanced buildings with
+  procedural lit-window facades, sidewalks, a park, a parking lot, beach,
+  marina pier with moored boats, and the sea — all under a sunset sky with a
+  low sun, warm fog and shadows that follow you.
+- **On foot and behind the wheel**: third-person character with mouse-orbit
+  and auto-follow camera, sprinting, and any car stealable with **E** — arcade
+  driving with speed-sensitive steering, handbrake turns, spinning/steering
+  wheels, car health, dents and wrecks.
+- **Traffic and pedestrians**: AI cars cruise the grid lane by lane,
+  intersection to intersection, braking for obstacles; pedestrians stroll
+  sidewalk loops, pause, flee danger and get knocked down (they get up).
+- **Wanted system and police**: crimes raise heat — witnesses scale it — shown
+  as 0–5 stars. Up to five PD interceptors spawn on the grid, pursue with
+  target leading, flash their light bars, sound a procedural siren and box
+  you in until the bust meter fills. BUSTED costs bail; WASTED costs a clinic
+  bill; both respawn you in the city.
+- **Four story missions plus free roam**: beacon-guided objectives with
+  distances and timers, cash rewards, and a repeatable $200 Sunset Circuit
+  rematch after the story.
+- **HUD and minimap**: cash, wanted stars, health and vehicle bars,
+  speedometer, objective tracker, interaction prompts, bust meter, banners —
+  and a live canvas minimap with streets, shoreline, traffic dots, flashing
+  police, a pulsing mission marker and the player arrow.
+- **Procedural sound**: WebAudio-synthesised engine hum that tracks speed,
+  a two-tone siren, an ambient pad, and checkpoint/cash/punch/crash effects.
+  No audio files.
+- **Save**: progress (cash, mission, position, health) persists in
+  localStorage; Continue from the start screen.
 
 ## Controls
 
-WASD move / drive · E enter or exit a car · F punch · Shift sprint ·
-Space handbrake · P pause · M mute · mouse orbit (click the game to lock)
+| Input | Action |
+| --- | --- |
+| W A S D / arrows | Move / drive |
+| Mouse (click canvas to lock) | Camera |
+| Shift | Sprint |
+| E | Enter / exit car |
+| Space | Handbrake |
+| F or mouse click | Punch |
+| R | Start the Sunset Circuit rematch (when offered) |
+| P | Pause |
+| M | Mute |
 
-## Run it
+## Run it locally
 
 ```sh
-node serve.ts          # serves game/ at http://localhost:8080
+node serve.ts
 ```
 
-or serve the `game/` folder with any static file server and open
-`game/index.html`. Deterministic screenshot scenes are available as
-`?shot=start|play|chase|end&seed=1`.
+then open the local address it prints (port 8080) in a desktop browser.
+The game is the static `game/` folder; any static file server works.
+
+Deterministic screenshot modes for the bundled screenshots:
+`game/index.html?shot=start|play|chase|end&seed=1` — a seeded city, a warmed-up
+simulation, and composed scenes (start screen over the city, a mid-drive
+mission run, a 3-star chase, the story-complete screen).
 
 ## Hand-in
 
-`node main.ts` copies `game/` and `screenshots/` to `/output` (or
-`$MAKEFUN_OUTPUT_DIR`) and writes the `dossier.json` summary with the vendored
-make.fun library in `vendor/makefun-game.ts`.
+```sh
+mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+```
 
-## Tech
-
-three.js r160 (vendored as `game/vendor/three.min.js`, MIT) for rendering;
-everything else is hand-written JavaScript with canvas-generated textures.
-Screenshots in `screenshots/` are real renders of the game in headless Chrome.
+`main.ts` copies `game/` and `screenshots/` to the output directory and writes
+`dossier.json` with `buildDossier` from `vendor/makefun-game.ts` under the
+scorer's caps. `shots.json` lists the four screenshots and the shot-mode query
+that produced each.
 
 ## License
 
-MIT — see `LICENSE`. three.js is MIT-licensed by its authors.
+MIT — see `LICENSE`. three.js (in `game/vendor/`) is MIT-licensed by its authors.
